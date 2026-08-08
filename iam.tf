@@ -1,3 +1,6 @@
+# Execution role + permissions for the ingest Lambda: it may assume this
+# role, and once assumed it can only read the landing bucket (s3.tf) and
+# read/write the ledger table (dynamodb.tf).
 data "aws_iam_policy_document" "lambda_assume" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -28,8 +31,7 @@ data "aws_iam_policy_document" "ledger_lambda" {
       "dynamodb:GetItem",
       "dynamodb:Query",
     ]
-    # No table exists yet; scope to a table ARN once the ledger table is added.
-    resources = ["*"]
+    resources = [aws_dynamodb_table.ledger.arn]
   }
 }
 

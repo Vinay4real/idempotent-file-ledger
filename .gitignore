@@ -6,3 +6,6 @@ tfplan
 crash.log
 crash.*.log
 .idea/
+build/
+__pycache__/
+.pytest_cache/
